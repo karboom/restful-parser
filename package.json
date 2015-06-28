@@ -1,0 +1,23 @@
+{
+  "name": "restful-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karboom/restful-parser.git"
+  },
+  "author": "karboom",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/karboom/restful-parser/issues"
+  },
+  "homepage": "https://github.com/karboom/restful-parser#readme",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^7.0.1"
+  }
+}
