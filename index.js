@@ -40,7 +40,7 @@ RSParser.prototype.parse = function (url, headers) {
     url.split('/').forEach(function (e) {
         if (_this._match_id(e)) {
             result.paths[0]['id'] = e;
-        } else {
+        } else if (e){
             result.paths.unshift({name: e});
         }
     });
