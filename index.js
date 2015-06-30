@@ -25,6 +25,38 @@ RSParser.prototype._parse_query_string = function (string) {
     return result;
 };
 
+RSParser.prototype._parse_filter = function (key, val) {
+    var prefix_op = {
+        'max_' : '<',
+        'min_' : '>',
+        'exc_' : '!=',
+        'inc_' : 'in'
+    };
+
+    var op = '=';
+    var name = key;
+    for (var prefix in prefix_op) {
+        if (prefix_op.hasOwnProperty(prefix)) {
+            if ( 0 == key.indexOf(prefix)) {
+                op = prefix_op[prefix];
+                name = key.substr(prefix.length);
+                break;
+            }
+        }
+    }
+
+    if ( 'in' == op) {
+        val = val.split(',');
+    }
+
+    //todo support Date,Regexp...
+    return {
+        name: name,
+        op: op,
+        value: val
+    };
+};
+
 RSParser.prototype.parse = function (url, headers) {
     var _this = this;
     var result = {
@@ -47,8 +79,20 @@ RSParser.prototype.parse = function (url, headers) {
 
     //parse filters
     var reserve = ['per_page', 'page', 'sort', 'fields'];
+    var query = this._parse_query_string(url);
+
+    for (var key in query) {
+        if (query.hasOwnProperty(key)) {
+            if ( -1 == reserve.indexOf(key)) {
+                continue;
+            }
+
+            //todo bad request detect (such as '>' with 'in')
+            result.filters.push(this._parse_filter(key, query[key]));
 
 
+        }
+    }
 
     return result;
 };
