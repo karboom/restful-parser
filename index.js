@@ -71,7 +71,7 @@ RSParser.prototype.parse = function (url, headers) {
         filters:[],
         sort:[],
         skip: 0,
-        limit: 0,
+        limit: this.default_per_page,
         fields:[]
     };
 
@@ -123,10 +123,12 @@ RSParser.prototype.parse = function (url, headers) {
 
 
     //todo parse page
-    if ( 'undefined' == typeof query['per_page']) {
-        result.limit = this.default_per_page;
-    } else {
+    if ( 'undefined' != typeof query['per_page']) {
         result.limit = query['per_page'];
+    }
+
+    if ('undefined' != typeof query['page']) {
+        result.skip = (query['page'] - 1) * result.limit;
     }
 
     //todo parse fields
