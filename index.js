@@ -132,6 +132,10 @@ RSParser.prototype.parse = function (url, headers) {
     }
 
     //todo parse fields
+    if ('undefined' != typeof query['fields']) {
+        result.fields = query['fields'].split(',');
+    }
+
     return result;
 };
 
