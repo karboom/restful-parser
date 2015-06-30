@@ -1,5 +1,12 @@
 function RSParser (obj) {
     this.id_regs = obj.id_regs;
+
+    this.default = {};
+    if ( 'undefined' == typeof obj.default.per_page) {
+        this.default.per_page = 20;
+    } else {
+        this.default.per_page = obj.default.per_page;
+    }
 }
 
 RSParser.prototype._match_id = function (string) {
@@ -96,6 +103,13 @@ RSParser.prototype.parse = function (url, headers) {
         }
     }
 
+    //todo parse sort
+
+
+    //todo parse page
+    
+
+    //todo parse fields
     return result;
 };
 
