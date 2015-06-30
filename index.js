@@ -69,7 +69,7 @@ RSParser.prototype.parse = function (url, headers) {
     };
 
     //parse path
-    url.split('/').forEach(function (e) {
+    url.substr(0, url.indexOf('?')).split('/').forEach(function (e) {
         if (_this._match_id(e)) {
             result.paths[0]['id'] = e;
         } else if (e){
