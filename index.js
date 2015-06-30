@@ -106,8 +106,13 @@ RSParser.prototype.parse = function (url, headers) {
     //todo parse sort
 
 
+
     //todo parse page
-    
+    if ( 'undefined' == typeof query.per_page) {
+        result.limit = this.default.per_page;
+    } else {
+        result.limit = query.per_page;
+    }
 
     //todo parse fields
     return result;
