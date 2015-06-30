@@ -1,11 +1,11 @@
 function RSParser (obj) {
     this.id_regs = obj.id_regs;
 
-    this.default = {};
-    if ( 'undefined' == typeof obj.default.per_page) {
-        this.default.per_page = 20;
+    this.default_per_page = {};
+    if ( 'undefined' == typeof obj.default_per_page) {
+        this.default_per_page = 20;
     } else {
-        this.default.per_page = obj.default.per_page;
+        this.default_per_page = obj.default_per_page;
     }
 }
 
@@ -104,14 +104,29 @@ RSParser.prototype.parse = function (url, headers) {
     }
 
     //todo parse sort
+    if ( 'undefined' != typeof query.sort) {
+        var sort_fields = query.sort.split(',');
 
+        var order;
+        for (var i = sort_fields.length; i--;) {
+
+            if ( '-' == sort_fields[i].charAt(0)) {
+                order = 'DESC';
+                sort_fields[i] = sort_fields[i].substr(1);
+            } else {
+                order = 'ASC';
+            }
+
+            result.sort.push({name: sort_fields[i], order: order});
+        }
+    }
 
 
     //todo parse page
-    if ( 'undefined' == typeof query.per_page) {
-        result.limit = this.default.per_page;
+    if ( 'undefined' == typeof query['per_page']) {
+        result.limit = this.default_per_page;
     } else {
-        result.limit = query.per_page;
+        result.limit = query['per_page'];
     }
 
     //todo parse fields
