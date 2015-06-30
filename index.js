@@ -68,8 +68,12 @@ RSParser.prototype.parse = function (url, headers) {
         fields:[]
     };
 
+    url = {
+        self: url.substr(0, url.indexOf('?')),
+        query: url.substr(url.indexOf('?') +1 )
+    };
     //parse path
-    url.substr(0, url.indexOf('?')).split('/').forEach(function (e) {
+    url.self.split('/').forEach(function (e) {
         if (_this._match_id(e)) {
             result.paths[0]['id'] = e;
         } else if (e){
@@ -79,18 +83,16 @@ RSParser.prototype.parse = function (url, headers) {
 
     //parse filters
     var reserve = ['per_page', 'page', 'sort', 'fields'];
-    var query = this._parse_query_string(url);
+    var query = this._parse_query_string(url.query);
 
     for (var key in query) {
         if (query.hasOwnProperty(key)) {
-            if ( -1 == reserve.indexOf(key)) {
+            if ( -1 != reserve.indexOf(key)) {
                 continue;
             }
 
             //todo bad request detect (such as '>' with 'in')
             result.filters.push(this._parse_filter(key, query[key]));
-
-
         }
     }
 
