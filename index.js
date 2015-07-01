@@ -111,10 +111,10 @@ RSParser.prototype.parse = function (url, headers) {
         for (var i = sort_fields.length; i--;) {
 
             if ( '-' == sort_fields[i].charAt(0)) {
-                order = 'DESC';
+                order = 'desc';
                 sort_fields[i] = sort_fields[i].substr(1);
             } else {
-                order = 'ASC';
+                order = 'asc';
             }
 
             result.sort.push({name: sort_fields[i], order: order});
