@@ -76,8 +76,8 @@ RSParser.prototype.parse = function (url, headers) {
     };
 
     url = {
-        self: url.substr(0, url.indexOf('?')),
-        query: url.substr(url.indexOf('?') +1 )
+        self: url.split('?')[0],
+        query: url.split('?')[1]
     };
     //parse path
     url.self.split('/').forEach(function (e) {
@@ -90,7 +90,11 @@ RSParser.prototype.parse = function (url, headers) {
 
     //parse filters
     var reserve = ['per_page', 'page', 'sort', 'fields'];
-    var query = this._parse_query_string(url.query);
+
+    var query = {};
+    if (url.query) {
+        query = this._parse_query_string(url.query);
+    }
 
     for (var key in query) {
         if (query.hasOwnProperty(key)) {
