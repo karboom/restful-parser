@@ -103,7 +103,7 @@ RSParser.prototype.parse = function (url, headers) {
         }
     }
 
-    //todo parse sort
+    //parse sort
     if ( 'undefined' != typeof query.sort) {
         var sort_fields = query.sort.split(',');
 
@@ -122,16 +122,16 @@ RSParser.prototype.parse = function (url, headers) {
     }
 
 
-    //todo parse page
+    //parse page
     if ( 'undefined' != typeof query['per_page']) {
-        result.limit = query['per_page'];
+        result.limit = parseInt(query['per_page']);
     }
 
     if ('undefined' != typeof query['page']) {
         result.skip = (query['page'] - 1) * result.limit;
     }
 
-    //todo parse fields
+    //parse fields
     if ('undefined' != typeof query['fields']) {
         result.fields = query['fields'].split(',');
     }
